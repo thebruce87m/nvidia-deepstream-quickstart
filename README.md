@@ -1,21 +1,26 @@
 # nvidia-deepstream-quickstart
 
-All done in ubuntu 20.04
+Requirements
+
+* All done in a ubuntu (native - not a Virtual Machine). Version 20.04, other versions may work.
+* NVIDIA GPU
+
+Deepstream example list:
+
+* https://docs.nvidia.com/metropolis/deepstream/dev-guide/text/DS_C_Sample_Apps.html
 
 
 # Confirm setup
 
-## Driver
+## Confirm setup - NVIDIA Driver
 
 Check your driver is ok by running the `nvidia-smi` command. If this doesn't work, fix it first as subsequent stages won't work.
 
-Command:
 ```bash
+# Command:
 nvidia-smi
-```
 
-Response:
-```bash
+# Response:
 +-----------------------------------------------------------------------------+
 | NVIDIA-SMI 510.73.05    Driver Version: 510.73.05    CUDA Version: 11.6     |
 |-------------------------------+----------------------+----------------------+
@@ -96,7 +101,7 @@ nvidia-driver-515/unknown 515.48.07-0ubuntu1 amd64
 # sudo apt install -y nvidia-driver-510
 ```
 
-## Docker
+## Confirm setup - NVIDIA Docker
 
 Follow the installation guide for NVIDIA docker container toolkit: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker
 
@@ -106,6 +111,30 @@ Make sure nvidia docker is working by running `nvidia-smi` within the docker env
 sudo docker run --rm --gpus all nvidia/cuda:11.0.3-base-ubuntu20.04 nvidia-smi
 ```
 
+# Now run a deepstream example
+
+```bash
+# Run the docker:
+docker run \
+--gpus all \
+-it \
+--rm \
+--net=host \
+--privileged \
+-v /tmp/.X11-unix:/tmp/.X11-unix \
+-v $(pwd):/code/ \
+-e DISPLAY=$DISPLAY \
+-e CUDA_VER=11.6 \
+-w /opt/nvidia/deepstream/deepstream-6.1/sources/apps/sample_apps/deepstream-test1 \
+nvcr.io/nvidia/deepstream:6.1-devel
+
+# Build the example (within the docker):
+make
+
+# Run the example (within the docker):
+./deepstream-test1-app ../../../../samples/streams/sample_720p.h264
+
+```
 
 
 

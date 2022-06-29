@@ -5,6 +5,8 @@ All done in ubuntu 20.04
 
 # Confirm setup
 
+## Driver
+
 Check your driver is ok by running the `nvidia-smi` command. If this doesn't work, fix it first as subsequent stages won't work.
 
 Command:
@@ -93,3 +95,17 @@ nvidia-driver-515/unknown 515.48.07-0ubuntu1 amd64
 
 # sudo apt install -y nvidia-driver-510
 ```
+
+## Docker
+
+Follow the installation guide for NVIDIA docker container toolkit: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker
+
+Make sure nvidia docker is working by running `nvidia-smi` within the docker environment:
+
+```bash
+sudo docker run --rm --gpus all nvidia/cuda:11.0.3-base-ubuntu20.04 nvidia-smi
+```
+
+
+
+

@@ -6,6 +6,6 @@
          "--privileged",
          "-e", "CUDA_VER=11.6",
          "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
-         "-e", "DISPLAY=:0.0"
+         "-e", "DISPLAY=${env:DISPLAY}"
     ]
 }
